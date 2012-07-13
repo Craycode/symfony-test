@@ -1,0 +1,11 @@
+PiotrHelloBundle:
+    resource: "@PiotrHelloBundle/Resources/config/routing.yml"
+    prefix:   /
+hello:
+  pattern: /say/{name}
+  defaults: {_controller: PiotrHelloBundle:Default:say}
+
+# Internal routing configuration to handle ESI
+#_internal:
+#   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#   prefix:   /_internal
