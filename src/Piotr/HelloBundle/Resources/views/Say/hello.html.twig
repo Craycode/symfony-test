@@ -1,1 +1,28 @@
-Heyah {{name}}!!!
+{% extends 'PiotrHelloBundle::layouts/base.html.twig' %}
+
+{% block body %}
+
+<div>
+	<h3>Heyah {{name|upper}}!!!</h3>
+	<div>Url: <span><a href="{{url_self}}">Self url</a></span></div>
+	<div>Url: <span><a href="{{ path('_piotr', {'name': 'Oh that\'s amazing'}) }}">Other url</a></span></div>
+</div>
+
+{% for field in form_fields %}
+{% include 'PiotrHelloBundle::templates/formInputRow.html.twig' with {'input': field} %}
+{% endfor %}
+
+<div id="numbers" style="margin-top: 10px;">
+	<div><strong>Random number list:</strong></div>
+	{% render "PiotrHelloBundle:Say:getNumbers" %}
+	
+</div>
+
+<div id="url-list" style="margin-top: 20px;">
+	<div><strong>URL list:</strong></div>
+	{% include 'PiotrHelloBundle::templates/urlList.html.twig' with {'urls': urlList} %}
+	
+</div>
+
+{% endblock %}
+
