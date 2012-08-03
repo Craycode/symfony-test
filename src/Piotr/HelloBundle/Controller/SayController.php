@@ -3,6 +3,7 @@
 namespace Piotr\HelloBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Piotr\HelloBundle\Entity\Product;
 
 class SayController extends Controller
 {
@@ -29,13 +30,28 @@ class SayController extends Controller
 				'class' => 'form-tel',
 				'name' => 'tel'
 			);
-			
+
 			$urlList = array(
 				'test!',
 				'something',
 				'Brian',
 				'Soup'
 			);
+
+			$product = new Product();
+			$product->setName('testproduct');
+			$product->setDescription('this is test product');
+			$product->setPrice(13.50);
+			$category = $this->getDoctrine()->getEntityManager()->getRepository('PiotrHelloBundle:Category')->findOneBy(array('name'=>'phone'));
+			$category = $category ? $category : new \Piotr\HelloBundle\Entity\Category('phone');
+			//$category = new \Piotr\HelloBundle\Entity\Category('phone');
+			$product->setCategory($category);
+			$em = $this->getDoctrine()->getEntityManager();
+			$em->persist($category);
+			$em->persist($product);
+			$em->flush();
+			
+			$products = $this->getDoctrine()->getRepository('PiotrHelloBundle:Product')->findAll();
 
 			return $this->render(
 					'PiotrHelloBundle:Say:hello.html.twig',
@@ -45,6 +61,8 @@ class SayController extends Controller
 						array('name' => 'Piotr Suwik')),
 					'form_fields' => $formfields,
 					'urlList' => $urlList,
+					'added_product' => $product,
+					'products' => $products
 					)
 			);
 		}

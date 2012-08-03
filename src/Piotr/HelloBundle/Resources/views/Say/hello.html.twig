@@ -3,6 +3,10 @@
 {% block body %}
 
 <div>
+	<h3>Just added product: {{added_product.name}}</h3>
+</div>
+
+<div>
 	<h3>Heyah {{name|upper}}!!!</h3>
 	<div>Url: <span><a href="{{url_self}}">Self url</a></span></div>
 	<div>Url: <span><a href="{{ path('_piotr', {'name': 'Oh that\'s amazing'}) }}">Other url</a></span></div>
@@ -22,6 +26,16 @@
 	<div><strong>URL list:</strong></div>
 	{% include 'PiotrHelloBundle::templates/urlList.html.twig' with {'urls': urlList} %}
 	
+</div>
+
+<div>
+	<h3>My products</h3>
+	{% for product in products %}
+	<div style="border: 1px solid blue;">
+		<div>Name: {{product.name}}</div>
+		<div>Category: {{product.getCategory().name}}[{{product.getCategory().id}}]</div>
+	</div>
+	{% endfor %}
 </div>
 
 {% endblock %}
